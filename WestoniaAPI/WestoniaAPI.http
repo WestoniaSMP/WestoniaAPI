@@ -1,0 +1,6 @@
+@WestoniaAPI_HostAddress = http://localhost:5033
+
+GET {{WestoniaAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,11 @@
+C:\Dev\Westonia\WestoniaAPI\WestoniaAPI.Core\bin\Debug\net8.0\WestoniaAPI.Core.deps.json
+C:\Dev\Westonia\WestoniaAPI\WestoniaAPI.Core\bin\Debug\net8.0\WestoniaAPI.Core.dll
+C:\Dev\Westonia\WestoniaAPI\WestoniaAPI.Core\bin\Debug\net8.0\WestoniaAPI.Core.pdb
+C:\Dev\Westonia\WestoniaAPI\WestoniaAPI.Core\obj\Debug\net8.0\WestoniaAPI.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dev\Westonia\WestoniaAPI\WestoniaAPI.Core\obj\Debug\net8.0\WestoniaAPI.Core.AssemblyInfoInputs.cache
+C:\Dev\Westonia\WestoniaAPI\WestoniaAPI.Core\obj\Debug\net8.0\WestoniaAPI.Core.AssemblyInfo.cs
+C:\Dev\Westonia\WestoniaAPI\WestoniaAPI.Core\obj\Debug\net8.0\WestoniaAPI.Core.csproj.CoreCompileInputs.cache
+C:\Dev\Westonia\WestoniaAPI\WestoniaAPI.Core\obj\Debug\net8.0\WestoniaAPI.Core.dll
+C:\Dev\Westonia\WestoniaAPI\WestoniaAPI.Core\obj\Debug\net8.0\refint\WestoniaAPI.Core.dll
+C:\Dev\Westonia\WestoniaAPI\WestoniaAPI.Core\obj\Debug\net8.0\WestoniaAPI.Core.pdb
+C:\Dev\Westonia\WestoniaAPI\WestoniaAPI.Core\obj\Debug\net8.0\ref\WestoniaAPI.Core.dll
