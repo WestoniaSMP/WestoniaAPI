@@ -1,32 +1,22 @@
 
 using Autofac;
-using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Principal;
-using System;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
+using System.Text;
+using System.Text.Json;
 using WestoniaAPI.DataAccess.Context;
 using WestoniaAPI.DataLayer.Entities.Security;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Reflection;
 using WestoniaAPI.DependencyInjection;
 
 namespace WestoniaAPI
 {
     public class Program
     {
-//        Ich möchte in meiner.NET 8 ASP.NET WebAPI EntityFramework(ohne Fluent-API, mit Attributen) und ASP.NET Identity implementieren. Ich möchte zwei Identitäten haben:
-//- MinecraftUser (Service-Secret[Umgebungsvariable] und Spieler-UUID zum Authentifizieren)
-//- WebUser(E-Mail & Passwort oder Discord zum Authentifizieren)
-//- MinecraftUser und WebUser können miteinander verbunden werden(WebUser hat eine Verlinkung zu MinecraftUser und anders herum.)
-
-//UserManager und RoleManager sollen in eine Wrapper-Klasse UserLogic und RoleLogic gepackt werden.
-
-//Ich habe die Top-Level-Statemes-Option für die Program.cs deaktiviert, das heisst ich habe eine Main-Methode.
-
-
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +27,48 @@ namespace WestoniaAPI
 
             // Register AutoMapper profiles
             builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            builder.Services.AddDbContext<WestoniaDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"));
+            });
+
+            builder.Services.AddIdentity<Account, Role>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            })
+                .AddEntityFrameworkStores<WestoniaDbContext>()
+                .AddDefaultTokenProviders();
+
+            // Configure JWT
+            var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+            var key = jwtSettings["Key"];
+            var lifetime = jwtSettings["TokenLifetime"];
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+#if DEBUG
+                options.RequireHttpsMetadata = false;
+#else
+                options.RequireHttpsMetadata = true;
+#endif
+
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key))
+                };
+
+            });
 
             // Register Autofac modules
             builder.Host.ConfigureContainer<ContainerBuilder>(builder =>

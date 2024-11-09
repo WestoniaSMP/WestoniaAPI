@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WestoniaAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75bcaf32623db365301e89ef9a513fed7d8ca00d")]
 [assembly: System.Reflection.AssemblyProductAttribute("WestoniaAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WestoniaAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

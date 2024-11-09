@@ -14,12 +14,15 @@ namespace WestoniaAPI.DataAccess.Context
     {
         public DbSet<MinecraftUser> MinecraftUsers { get; set; }
         public DbSet<WebUser> WebUsers { get; set; }
-        public DbSet<Account> Accounts { get; set; }
+
+        public WestoniaDbContext(DbContextOptions<WestoniaDbContext> options) : base(options)
+        {
+
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
             // Additional configurations
         }
     }

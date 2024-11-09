@@ -12,6 +12,5 @@ namespace WestoniaAPI.DataAccess.Interfaces
     {
         public DbSet<MinecraftUser> MinecraftUsers { get; set; }
         public DbSet<WebUser> WebUsers { get; set; }
-        public DbSet<Account> Accounts { get; set; }
     }
 }

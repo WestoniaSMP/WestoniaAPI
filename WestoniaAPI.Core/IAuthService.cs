@@ -9,6 +9,6 @@ namespace WestoniaAPI.Core
 {
     public interface IAuthService
     {
-        string GenerateToken(MinecraftUser user);
+        string GenerateJwtToken(Account user);
     }
 }

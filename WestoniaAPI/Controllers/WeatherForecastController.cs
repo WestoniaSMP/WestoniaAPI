@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WestoniaAPI.Core;
 using WestoniaAPI.DataLayer.DataModels;
@@ -10,11 +11,12 @@ namespace WestoniaAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController(IMapper mapper, IAuthService authService, ILogger<WeatherForecastController> logger) : ControllerBase
+    public class WeatherForecastController(IMapper mapper, IAuthService authService, ILogger<WeatherForecastController> logger, MinecraftUserLogic um) : ControllerBase
     {
         private readonly IMapper _mapper = mapper;
         private readonly IAuthService _authService = authService;
         private readonly ILogger<WeatherForecastController> _logger = logger;
+        private readonly MinecraftUserLogic _minecraftUserLogic = um;
 
 
         [HttpPost]
@@ -24,7 +26,9 @@ namespace WestoniaAPI.Controllers
             user.UserName = "Test";
             user.MinecraftUuid = new Guid();
 
-            _authService.GenerateToken(user);
+            string kevin = _authService.GenerateJwtToken(user);
+
+            _minecraftUserLogic.AddLoginAsync(user, new UserLoginInfo("Minecraft", "Test", "Test"));
 
             DmMinecraftUser dmUser = _mapper.Map<MinecraftUser, DmMinecraftUser>(user);
             MdlMinecraftUser mdlUser = _mapper.Map<DmMinecraftUser, MdlMinecraftUser>(dmUser);

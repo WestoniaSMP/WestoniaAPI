@@ -13,25 +13,25 @@ namespace WestoniaAPI.DataLogic
     {
         private readonly IConfiguration _configuration = configuration;
 
-        public string GenerateToken(MinecraftUser user)
+        public string GenerateJwtToken(Account user)
         {
-            var handler = new JwtSecurityTokenHandler();
-            string? configKey = _configuration["Jwt:Key"];
+            var jwtSettings = _configuration.GetSection("Jwt");
+            var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
 
-            if (configKey is null) throw new Exception("Jwt:Key not found in configuration.");
-
-            var key = Encoding.UTF8.GetBytes(configKey);
-            var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var claims = new[]
             {
-                Subject = GenerateClaims(user),
-                Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_configuration["Jwt:TokenLifetime"])),
-                SigningCredentials = credentials
-            };
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+        };
 
-            var token = handler.CreateToken(tokenDescriptor);
-            return handler.WriteToken(token);
+            var token = new JwtSecurityToken(
+                issuer: jwtSettings["Issuer"],
+                audience: jwtSettings["Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(2),
+                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         private ClaimsIdentity GenerateClaims(MinecraftUser user)
