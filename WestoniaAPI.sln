@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WestoniaAPI", "WestoniaAPI\WestoniaAPI.csproj", "{6879E076-A416-490A-B65F-FD72E97A38BF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WestoniaAPI.Core", "WestoniaAPI.Core\WestoniaAPI.Core.csproj", "{EF468AAA-C3BD-47BB-96EE-AD35C235C85A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WestoniaAPI.DataLayer", "WestoniaAPI.DataLayer\WestoniaAPI.DataLayer.csproj", "{D210A6E3-C331-422F-9B95-E3B684F39F29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WestoniaAPI.DataAccess", "WestoniaAPI.DataAccess\WestoniaAPI.DataAccess.csproj", "{A270723D-71E2-4A78-9DE3-D3A47B34432B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WestoniaAPI.DataLogic", "WestoniaAPI.DataLogic\WestoniaAPI.DataLogic.csproj", "{73D9ACC4-4D68-42BB-8E66-CD7D80731883}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6879E076-A416-490A-B65F-FD72E97A38BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6879E076-A416-490A-B65F-FD72E97A38BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6879E076-A416-490A-B65F-FD72E97A38BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6879E076-A416-490A-B65F-FD72E97A38BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF468AAA-C3BD-47BB-96EE-AD35C235C85A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF468AAA-C3BD-47BB-96EE-AD35C235C85A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF468AAA-C3BD-47BB-96EE-AD35C235C85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF468AAA-C3BD-47BB-96EE-AD35C235C85A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D210A6E3-C331-422F-9B95-E3B684F39F29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D210A6E3-C331-422F-9B95-E3B684F39F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D210A6E3-C331-422F-9B95-E3B684F39F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D210A6E3-C331-422F-9B95-E3B684F39F29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A270723D-71E2-4A78-9DE3-D3A47B34432B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A270723D-71E2-4A78-9DE3-D3A47B34432B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A270723D-71E2-4A78-9DE3-D3A47B34432B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A270723D-71E2-4A78-9DE3-D3A47B34432B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73D9ACC4-4D68-42BB-8E66-CD7D80731883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73D9ACC4-4D68-42BB-8E66-CD7D80731883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73D9ACC4-4D68-42BB-8E66-CD7D80731883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73D9ACC4-4D68-42BB-8E66-CD7D80731883}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E581E1A9-63F3-47E6-8772-1BCE0F31B606}
+	EndGlobalSection
+EndGlobal
