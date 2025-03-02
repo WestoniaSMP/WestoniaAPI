@@ -11,14 +11,12 @@ namespace WestoniaAPI.DataLayer.Entities.Security
 
         public Guid MinecraftUuid { get; set; } = Guid.Empty;
 
-        public string? MinecraftUsername { get; set; }
-
         public string DiscordId { get; set; } = string.Empty;
 
-        public string? DiscordUsername { get; set; }
+        public DateTime UserCreated { get; set; } = DateTime.Now;
 
-        public DateTime FirstJoin { get; set; } = DateTime.Now;
+        public DateTime FirstJoin { get; set; } = DateTime.MinValue;
 
-        public DateTime LastJoin { get; set; } = DateTime.Now;
+        public DateTime LastJoin { get; set; } = DateTime.MinValue;
     }
 }

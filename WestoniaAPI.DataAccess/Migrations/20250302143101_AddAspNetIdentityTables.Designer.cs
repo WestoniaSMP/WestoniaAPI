@@ -12,8 +12,8 @@ using WestoniaAPI.DataAccess.Context;
 namespace WestoniaAPI.DataAccess.Migrations
 {
     [DbContext(typeof(WestoniaDbContext))]
-    [Migration("20241110155232_AddIdentityDataTables")]
-    partial class AddIdentityDataTables
+    [Migration("20250302143101_AddAspNetIdentityTables")]
+    partial class AddAspNetIdentityTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -177,9 +177,6 @@ namespace WestoniaAPI.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DiscordUsername")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -206,9 +203,6 @@ namespace WestoniaAPI.DataAccess.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("MinecraftUsername")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("MinecraftUuid")
                         .HasColumnType("uniqueidentifier");
 
@@ -234,6 +228,9 @@ namespace WestoniaAPI.DataAccess.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("UserCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)

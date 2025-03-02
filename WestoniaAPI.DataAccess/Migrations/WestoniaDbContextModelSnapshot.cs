@@ -174,9 +174,6 @@ namespace WestoniaAPI.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DiscordUsername")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -203,9 +200,6 @@ namespace WestoniaAPI.DataAccess.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("MinecraftUsername")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("MinecraftUuid")
                         .HasColumnType("uniqueidentifier");
 
@@ -231,6 +225,9 @@ namespace WestoniaAPI.DataAccess.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("UserCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using WestoniaAPI.DataLayer.DataModels;
+using WestoniaAPI.DataLayer.DataModels.Security;
 using WestoniaAPI.DataLayer.Entities.Security;
-using WestoniaAPI.DataLayer.Models;
+using WestoniaAPI.DataLayer.Models.Security;
 
 namespace WestoniaAPI.Helpers
 {

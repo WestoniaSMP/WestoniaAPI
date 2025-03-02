@@ -2,7 +2,9 @@
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.Intrinsics.Arm;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using WestoniaAPI.Core;
 using WestoniaAPI.DataLayer.Entities.Security;
@@ -15,20 +17,34 @@ namespace WestoniaAPI.DataLogic
 
         public string GenerateJwtToken(WestoniaUser user)
         {
-            var jwtSettings = _configuration.GetSection("JwtSettings");
-            var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]); // Check appsettings!!!
+            byte[] derivedKey = new byte[32];
 
-            var claims = new[]
+            using (SHA256 sha256 = SHA256.Create())
             {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-        };
+                byte[] jwtEncryptionKeyBytes = Encoding.UTF8.GetBytes(_configuration["JwtSettings:EncryptionKey"] ?? throw new Exception("JWT key not found"));
+                derivedKey = sha256.ComputeHash(jwtEncryptionKeyBytes);
+            }
+
+            string jwtIssuer = _configuration["JwtSettings:Issuer"] ?? string.Empty;
+            string jwtAudience = _configuration["JwtSettings:Audience"] ?? string.Empty;
+
+            var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim("UserName", user.UserName ?? throw new Exception("User name not found")),
+            new Claim("DiscordId", user.DiscordId),
+            new Claim("MinecraftUuid", user.MinecraftUuid.ToString()),
+            new Claim("Email", user.Email ?? throw new Exception("User email not found")),
+            new Claim("Language", user.Language),
+            };
+
 
             var token = new JwtSecurityToken(
-                issuer: jwtSettings["Issuer"],
-                audience: jwtSettings["Audience"],
+                issuer: jwtIssuer,
+                audience: jwtAudience,
                 claims: claims,
                 expires: DateTime.UtcNow.AddHours(2),
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
+                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(derivedKey), SecurityAlgorithms.HmacSha256)
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
@@ -39,7 +55,7 @@ namespace WestoniaAPI.DataLogic
             var claims = new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.MinecraftUuid.ToString()),
-                
+
             });
 
             //claims.AddClaim(new Claim(ClaimTypes.Role, user.Role));

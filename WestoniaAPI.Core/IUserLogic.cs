@@ -5,12 +5,17 @@ namespace WestoniaAPI.Core
 {
     public interface IUserLogic
     {
+        UserManager<WestoniaUser> UserManager { get; }
+        RoleManager<WestoniaRole> RoleManager { get; }
+
         /// <summary>
         /// Creates a new Westonia user.
         /// </summary>
-        /// <param name="userToCreate"> The user to create. </param>
+        /// <param name="discordId"> The Discord ID of the user to create. </param>
+        /// <param name="discordEmail"> The Émail of the users Discord identity. </param>
+        /// <param name="discordUserName"> The username of the users Discord identity. </param>
         /// <returns> The identity result of the creation. </returns>
-        Task<IdentityResult> CreateUser(WestoniaUser userToCreate);
+        Task<IdentityResult> CreateUser(string discordId, string discordEmail, string discordUserName);
 
         /// <summary>
         /// Checks if a user with the given Minecraft UUID exists.

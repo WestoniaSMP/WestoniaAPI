@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WestoniaAPI.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIdentityDataTables : Migration
+    public partial class AddAspNetIdentityTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,9 +35,8 @@ namespace WestoniaAPI.DataAccess.Migrations
                     Language = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HasAcceptedGTCs = table.Column<bool>(type: "bit", nullable: false),
                     MinecraftUuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MinecraftUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DiscordId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DiscordUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FirstJoin = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastJoin = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Net.WebSockets;
 using WestoniaAPI.Core;
 using WestoniaAPI.DataLayer.Entities.Security;
 
@@ -10,23 +11,24 @@ namespace WestoniaAPI.DataLogic
         private readonly UserManager<WestoniaUser> _userManager = userManager;
         private readonly RoleManager<WestoniaRole> _roleManager = roleManager;
 
+        public UserManager<WestoniaUser> UserManager => _userManager;
+        public RoleManager<WestoniaRole> RoleManager => _roleManager;
+
         /// <inheritdoc />
-        public async Task<IdentityResult> CreateUser(WestoniaUser westoniaUser)
+        public async Task<IdentityResult> CreateUser(string discordId, string discordEmail, string discordUserName)
         {
-            WestoniaUser newUser = new WestoniaUser
+            
+            WestoniaUser userToBeCreated = new WestoniaUser
             {
-                UserName = "TestUser",
-                Email = "test@mail.de",
+                DiscordId = discordId,
+                Email = discordEmail,
+                UserName = discordUserName,
                 EmailConfirmed = true,
-                FirstJoin = DateTime.Now,
-                LastJoin = DateTime.Now,
-                HasAcceptedGTCs = true,
-                Language = "en",
-                DiscordId = "TestId",
-                MinecraftUuid = Guid.NewGuid()
+                NormalizedEmail = discordId.ToUpper(),
+                NormalizedUserName = discordUserName.ToUpper(),
             };
 
-            return await _userManager.CreateAsync(newUser);
+            return await _userManager.CreateAsync(userToBeCreated);
         }
 
         /// <inheritdoc />

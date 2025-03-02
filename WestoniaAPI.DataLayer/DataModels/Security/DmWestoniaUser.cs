@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WestoniaAPI.DataLayer.DataModels
+namespace WestoniaAPI.DataLayer.DataModels.Security
 {
     public class DmWestoniaUser
     {
