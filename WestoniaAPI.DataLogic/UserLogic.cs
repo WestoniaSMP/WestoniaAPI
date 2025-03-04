@@ -15,14 +15,14 @@ namespace WestoniaAPI.DataLogic
         public RoleManager<WestoniaRole> RoleManager => _roleManager;
 
         /// <inheritdoc />
-        public async Task<IdentityResult> CreateUser(string discordId, string discordEmail, string discordUserName)
+        public async Task<IdentityResult> CreateUser(string discordId, string discordUserName)
         {
-            
+
             WestoniaUser userToBeCreated = new WestoniaUser
             {
                 DiscordId = discordId,
-                Email = discordEmail,
                 UserName = discordUserName,
+                Email = string.Empty,
                 EmailConfirmed = true,
                 NormalizedEmail = discordId.ToUpper(),
                 NormalizedUserName = discordUserName.ToUpper(),

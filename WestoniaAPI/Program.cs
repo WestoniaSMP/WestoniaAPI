@@ -60,6 +60,7 @@ namespace WestoniaAPI
             // Configure authentication
             builder.Services.AddWestoniaAuthenticationServices(builder.Configuration);
 
+            // TODO: Remove static URLs and add configuration
             // Set static URLs for http and https
             builder.WebHost.UseUrls("http://*:8080", "https://*:8081");
 
@@ -110,6 +111,13 @@ namespace WestoniaAPI
             app.UseAuthorization();
 
             app.MapControllers();
+
+            // Do migrations
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<WestoniaDbContext>();
+                dbContext.Database.Migrate();
+            }
 
             app.Run();
         }

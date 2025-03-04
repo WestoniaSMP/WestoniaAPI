@@ -19,7 +19,7 @@ namespace WestoniaAPI.Configurations
         {
             services.AddIdentity<WestoniaUser, WestoniaRole>(options =>
             {
-                options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = false;
             }).AddEntityFrameworkStores<WestoniaDbContext>().AddDefaultTokenProviders();
             
             return services;

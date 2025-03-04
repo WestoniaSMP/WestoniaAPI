@@ -17,9 +17,12 @@ namespace WestoniaAPI.Configurations
         /// <returns> The service collection with the WestoniaDbContext added. </returns>
         public static IServiceCollection AddWestoniaDbContext(this IServiceCollection services, IConfiguration config)
         {
+            string? connectionString = config.GetConnectionString("MariaDb") ?? throw new Exception("MariaDb connection string not found");
+
+            ServerVersion serverVersion = ServerVersion.AutoDetect(connectionString);
             services.AddDbContext<WestoniaDbContext>(options =>
             {
-                options.UseSqlServer(config.GetConnectionString("WestoniaDb"));
+                options.UseMySql(config.GetConnectionString("MariaDb"), serverVersion);
             });
 
             return services;
