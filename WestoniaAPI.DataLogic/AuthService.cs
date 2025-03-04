@@ -34,7 +34,6 @@ namespace WestoniaAPI.DataLogic
             new Claim("UserName", user.UserName ?? throw new Exception("User name not found")),
             new Claim("DiscordId", user.DiscordId),
             new Claim("MinecraftUuid", user.MinecraftUuid.ToString()),
-            new Claim("Email", user.Email ?? throw new Exception("User email not found")),
             new Claim("Language", user.Language),
             };
 

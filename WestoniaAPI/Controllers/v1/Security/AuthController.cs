@@ -7,6 +7,7 @@ using System.Security.Claims;
 using WestoniaAPI.Core;
 using WestoniaAPI.DataLayer.Entities.Security;
 using WestoniaAPI.DataLogic;
+using WestoniaAPI.Helpers;
 
 namespace WestoniaAPI.Controllers.v1.Security
 {
@@ -34,7 +35,7 @@ namespace WestoniaAPI.Controllers.v1.Security
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity ?? throw new ArgumentNullException("User identity not found");
 
-            WestoniaUser? user = await _userLogic.UserManager.FindByEmailAsync(identity.FindFirst(ClaimTypes.Email)?.Value);
+            WestoniaUser? user = await _userLogic.UserManager.FindByDiscordIdAsync(identity.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             if (user == null)
                 return BadRequest("User not found");

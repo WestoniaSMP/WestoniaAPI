@@ -45,7 +45,7 @@ namespace WestoniaAPI.Configurations
             string discordClientId = config["DiscordAuth:ClientId"] ?? string.Empty;
             string discordClientSecret = config["DiscordAuth:ClientSecret"] ?? string.Empty;
             string discordRedirectUri = config["DiscordAuth:RedirectUri"] ?? string.Empty;
-            string[] discordScopes = config["DiscordAuth:Scopes"]?.Split(',') ?? new string[0];
+            string discordScopes = config["DiscordAuth:Scopes"] ?? string.Empty;
 
             byte[] derivedKey = new byte[32];
 
@@ -80,9 +80,15 @@ namespace WestoniaAPI.Configurations
             .AddOAuth("Discord", options =>
             {
                 options.AuthorizationEndpoint = "https://discord.com/api/oauth2/authorize";
-                foreach (var scope in discordScopes)
+                if (discordScopes.Contains(','))
                 {
-                    options.Scope.Add(scope);
+                    foreach (var scope in discordScopes.Split(','))
+                    {
+                        options.Scope.Add(scope);
+                    }
+                } else
+                {
+                    options.Scope.Add(discordScopes);
                 }
 
                 options.CallbackPath = new PathString(discordRedirectUri); // !!! CallbackPath = RedirectUri !!!
@@ -95,7 +101,6 @@ namespace WestoniaAPI.Configurations
 
                 options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
                 options.ClaimActions.MapJsonKey(ClaimTypes.Name, "username");
-                options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
 
                 options.AccessDeniedPath = "/api/v1/auth/AccessDenied";
 
@@ -116,16 +121,24 @@ namespace WestoniaAPI.Configurations
                         var user = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
                         context.RunClaimActions(user.RootElement);
 
-                        var identity = context.Identity as ClaimsIdentity;
+                        ClaimsIdentity? identity = context.Identity as ClaimsIdentity;
 
                         if (identity is null)
+                        {
                             context.Fail("Failed to retrieve user information from Discord");
+                            return;
+                        }
 
                         IUserLogic userLogic = context.HttpContext.RequestServices.GetRequiredService<IUserLogic>();
                         bool success = await CreateUserIfNotExists(userLogic, identity);
 
                         if (!success)
+                        {
                             context.Fail("User creation failed");
+                            return;
+                        }
+
+                        context.Success();
                     }
                 };
             });
@@ -136,20 +149,18 @@ namespace WestoniaAPI.Configurations
         {
             var discordIdClaim = identity.FindFirst(claim => claim.Type == ClaimTypes.NameIdentifier);
             var discordNameClaim = identity.FindFirst(claim => claim.Type == ClaimTypes.Name);
-            var discordEmailClaim = identity.FindFirst(claim => claim.Type == ClaimTypes.Email);
 
-            if (discordIdClaim is null || discordNameClaim is null || discordEmailClaim is null)
+            if (discordIdClaim is null || discordNameClaim is null)
             {
                 return false;
             }
 
             string discordId = discordIdClaim.Value;
             string discordName = discordNameClaim.Value;
-            string discordEmail = discordEmailClaim.Value;
 
             if (!(await userLogic.UserExists(discordId)))
             {
-                IdentityResult result = await userLogic.CreateUser(discordId, discordEmail, discordName);
+                IdentityResult result = await userLogic.CreateUser(discordId, discordName);
                 return result.Succeeded;
             }
 
